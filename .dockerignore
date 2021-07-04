@@ -1,0 +1,8 @@
+**/node_modules
+venv/
+npm-debug.log
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
