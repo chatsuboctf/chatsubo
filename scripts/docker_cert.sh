@@ -34,8 +34,12 @@ echo extendedKeyUsage = clientAuth > client-extfile.cnf
 ## Sign csr with CA
 openssl x509 -req -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out client-cert.pem -extfile client-extfile.cnf
 
-## Clean artefacts
+## Clean artifacts
 rm -v client.csr server.csr server-extfile.cnf client-extfile.cnf
+
+# Rename clients artifacts for a cleaner handling
+mv client-key.pem key.pem
+mv client-cert.pem cert.pem
 
 ## Adjust permissions to protect the CA's keys
 chmod -v 0400 ca-key.pem client-key.pem server-key.pem
