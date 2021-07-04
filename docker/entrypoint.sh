@@ -25,11 +25,20 @@ if [ -n "$DB_URL" ]
     sleep 1;
 fi
 
-echo "Starting Chatsubo"
-exec /opt/chatsubo/venv/bin/gunicorn app:server \
-  --bind 0.0.0.0:8000 \
-  --worker-class "$WORKER_CLASS" \
-  --worker-tmp-dir "$WORKER_TEMP_DIR" \
-  --workers 1 \
-  --access-logfile "$ACCESS_LOG" \
-  --error-logfile "$ERROR_LOG"
+case "$1" in
+    "web")
+      echo "Starting Chatsubo"
+      exec /opt/chatsubo/venv/bin/gunicorn app:server \
+        --bind 0.0.0.0:8000 \
+        --worker-class "$WORKER_CLASS" \
+        --worker-tmp-dir "$WORKER_TEMP_DIR" \
+        --workers 1 \
+        --access-logfile "$ACCESS_LOG" \
+        --error-logfile "$ERROR_LOG"
+      ;;
+    "celery")
+      echo "Starting workers"
+      echo "!] Give at least 10 seconds for Celery to connect to rabbitmq. Few connection errors on startup are to be expected."
+      /opt/chatsubo/venv/bin/celery -A app.queue.celery_app worker --concurrency ${MAX_CONCURRENT_CONTAINER_BUILDS:-5} -l INFO
+      ;;
+esac

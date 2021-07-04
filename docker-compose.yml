@@ -5,10 +5,12 @@ services:
     build: .
     user: root
     restart: always
+    entrypoint: [/bin/sh, /opt/chatsubo/docker/entrypoint.sh, web]
     ports:
       - "127.0.0.1:8000:8000"
-    entrypoint: [/bin/sh, /opt/chatsubo/docker/entrypoint.sh]
     environment:
+      - CHATSUBO_ADMIN_USERNAME=${CHATSUBO_ADMIN_USERNAME:-admin}
+      - CHATSUBO_ADMIN_PASSWORD=${CHATSUBO_ADMIN_PASSWORD:-changeme}
       - TZ=${CHATSUBO_TZ:-Europe/Paris}
       - BROKER_URL=${CHATSUBO_BROKER_URL:-pyamqp://chatsubo:changeme@rabbitmq//}
       - CHATSUBO_DATABASE_URL=mysql://${CHATSUBO_MYSQL_USER:-chatsubo}:${CHATSUBO_MYSQL_PASSWORD:-chatsubo}@db:3306/${CHATSUBO_MYSQL_DATABASE:-chatsubo}
@@ -54,11 +56,12 @@ services:
     build: .
     user: root
     restart: always
-    command: /opt/chatsubo/venv/bin/celery -A app.queue.celery_app worker --concurrency ${MAX_CONCURRENT_CONTAINER_BUILDS:-5} -l INFO
+    entrypoint: [/bin/sh, /opt/chatsubo/docker/entrypoint.sh, celery]
     volumes:
       - ./config:/opt/chatsubo/config:ro
       - /var/chatsubo/docker:/var/chatsubo/docker:ro
     environment:
+      - CHATSUBO_WORKERS=true
       - TZ=${CHATSUBO_TZ:-Europe/Paris}
       - BROKER_URL=${CHATSUBO_BROKER_URL:-pyamqp://chatsubo:changeme@rabbitmq//}
       - CHATSUBO_DATABASE_URL=mysql://${CHATSUBO_MYSQL_USER:-chatsubo}:${CHATSUBO_MYSQL_PASSWORD:-chatsubo}@db:3306/${CHATSUBO_MYSQL_DATABASE:-chatsubo}
@@ -71,8 +74,6 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.8-alpine
-    ports:
-      - "5672:5672"
     environment:
       - TZ=${CHATSUBO_TZ:-Europe/Paris}
       - RABBITMQ_DEFAULT_USER=chatsubo

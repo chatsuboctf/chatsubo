@@ -172,13 +172,13 @@
               :items="availableCategories"
               :rules="[() => !!newBox.category || 'This field is required']"
               auto-select-first
-              label="Category"
+              label="Track"
               required
           />
           <v-autocomplete
               outlined
               v-model="newBox.os"
-              :items="['Linux', 'Windows', 'FreeBSD', 'Other']"
+              :items="availableOS"
               :rules="[() => !!newBox.os || 'This field is required']"
               auto-select-first
               label="OS"
@@ -563,6 +563,7 @@ export default {
   props: {
     availableTemplates: Array,
     availableCategories: Array,
+    availableOS: Array,
     show: Boolean,
   },
   beforeMount() {
@@ -640,6 +641,16 @@ export default {
               break
             case "template":
               continue
+            case "category":
+              if (this.availableCategories.includes(key)){
+                this.newBox[key] = selectedTemplate.labels[label]
+              }
+              break
+            case "os":
+              if (this.availableOS.includes(key)){
+                this.newBox[key] = selectedTemplate.labels[label]
+              }
+              break
             default:
               this.newBox[key] = selectedTemplate.labels[label]
           }

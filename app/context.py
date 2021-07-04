@@ -13,6 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import create_database, database_exists
 from sqlalchemy.exc import ProgrammingError, IntegrityError, OperationalError
 
+from app import config
 from app.providers.exc import MissingProviderConfigException, BackendConnectionException, VpnProviderErrorException
 from app.providers.providers import Providers
 from app.providers.vpn_providers import VpnProviders
@@ -85,28 +86,23 @@ def register_socketio(socketio_server):
 def seed_db():
     try:
         with db.engine.connect() as conn:
-            admin_username = os.environ.get("CHATSUBO_ADMIN_USERNAME", "Admin")
-            passwd = os.environ.get("CHATSUBO_ADMIN_PASSWORD", randstr(32))
-            encrypted = bcrypt.hashpw(passwd.encode(), bcrypt.gensalt())
-            # Seed admin account
-            # conn.execute(f"INSERT INTO users (id, username, password, email, active, admin, score) VALUES('{str(uuid4())}', '{admin_username}', '{encrypted.decode()}', 'null@dev.null', 1, 1, 0)")
-
-            # print(f"Admin account has been created with the following password : {passwd}")
             # Seed the settings with the default values
             conn.execute(f"INSERT INTO settings (app_name) VALUES ('Chatsubo');")
 
-            ## DEV only
-            conn.execute(f"INSERT INTO users (id, username, password, email, active, admin, score) VALUES('{str(uuid4())}', 'Admin', '{bcrypt.hashpw('toor'.encode(), bcrypt.gensalt()).decode()}', 'null@dev.null', 1, 1, 0)")
-            conn.execute(f"INSERT INTO users (id, username, password, email, active, admin, score) VALUES('{str(uuid4())}', 'aa', '{bcrypt.hashpw('toor'.encode(), bcrypt.gensalt()).decode()}', 'null@dev.nulla', 1, 0, 0)")
-            conn.execute(f"INSERT INTO `categories` VALUES ('cb802672-3302-4608-91d0-12570470f9d9','Classic', 'classic', 'Pwn the boxes','mdi-castle',0,NULL,'2021-01-06 15:50:33');")
-            descr = "L\\'enquête de l\\'ANSSI révèle qu\\'un serveur de monitoring mis en place en 2018 par un élève a permi aux attaquants de maintenir leur accès au sein de l\\'école.\n\nL\\'élève maintient mordicus que son serveur est impénétrable, pourrez-vous lui prouver qu\\'il se trompe ?"
-            # insert_box = f"INSERT INTO `boxes` VALUES ('5e21414d-173c-416c-98b7-a0f49b1920c1','Kazbox #1','{descr}',4,'kazbox-v1','https://source.unsplash.com/random/450x300',NULL,'Linux','dynamic',0,1,'2021-01-06 16:08:23',NULL,'cb802672-3302-4608-91d0-12570470f9d9');"
-            insert_box = f"INSERT INTO `boxes` VALUES ('0433dce8-7e9a-4b30-af20-b627efd93219','aa','aa',8,'hello-flag:v2',NULL,0,'aa',NULL,'Linux',NULL,0,0,'2021-01-15 17:20:41',NULL,'cb802672-3302-4608-91d0-12570470f9d9'),('5e21414d-173c-416c-98b7-a0f49b1920c1','Kazbox #1','{descr}',4,'kazbox-v1',NULL,0,'https://source.unsplash.com/random/450x300',NULL,'Linux','classic',0,0,'2021-01-06 16:08:23',NULL,'cb802672-3302-4608-91d0-12570470f9d9'),('88a1a25a-aebf-4e57-896d-ad0839a52925','ee','ee',7,'hello-flag:v2',NULL,60,'aa',NULL,'Linux','dynamic',0,0,'2021-05-02 19:43:38',NULL,'cb802672-3302-4608-91d0-12570470f9d9'),('eaf5e33d-3a95-428c-a377-03bee8c20a22','zz','zz',3,'hello-flag:v2',NULL,0,'zzz',NULL,'Linux',NULL,0,0,'2021-01-15 17:21:46',NULL,'cb802672-3302-4608-91d0-12570470f9d9');"
-            conn.execute(insert_box)
-            conn.execute("INSERT INTO `boxes` VALUES ('0433dce8-7e9a-4b30-af20-b627efd93219','aa','aa',8,'hello-flag:v2',NULL,0,'aa',NULL,'Linux',NULL,0,0,'2021-01-15 17:20:41',NULL,'cb802672-3302-4608-91d0-12570470f9d9');")
-            insert_flag = "INSERT INTO `flags` VALUES ('b9ec564d-6935-473e-98cd-7c100828eb1f',25,'user','mdi-account','User',1,0,0,0,0,'5e21414d-173c-416c-98b7-a0f49b1920c1'),('e387be54-1503-4ef2-acf7-e4fa0baadf9b',50,'root','mdi-pound','Root',0,1,0,0,0,'5e21414d-173c-416c-98b7-a0f49b1920c1');"
-            conn.execute(insert_flag)
-            ##
+            if os.environ.get("ENV", "production") == "development":
+                ## DEV only
+                conn.execute(f"INSERT INTO users (id, username, password, email, active, admin, score) VALUES('{str(uuid4())}', 'Admin', '{bcrypt.hashpw('toor'.encode(), bcrypt.gensalt()).decode()}', 'null@dev.null', 1, 1, 0)")
+                conn.execute(f"INSERT INTO users (id, username, password, email, active, admin, score) VALUES('{str(uuid4())}', 'test', '{bcrypt.hashpw('toor'.encode(), bcrypt.gensalt()).decode()}', 'test@dev.null', 1, 0, 0)")
+                conn.execute(f"INSERT INTO `categories` VALUES ('cb802672-3302-4608-91d0-12570470f9d9','Classic', 'classic', 'Pwn the boxes','mdi-castle',0,NULL,'2021-01-06 15:50:33');")
+                ##
+            else:
+                admin_username = os.environ.get("CHATSUBO_ADMIN_USERNAME", "admin")
+                passwd = os.environ.get("CHATSUBO_ADMIN_PASSWORD", randstr(32))
+                encrypted = bcrypt.hashpw(passwd.encode(), bcrypt.gensalt())
+
+                # Seed admin account
+                conn.execute(f"INSERT INTO users (id, username, password, active, admin, score) VALUES('{str(uuid4())}', '{admin_username}', '{encrypted.decode()}', 1, 1, 0)")
+                print(f"Admin account has been created with the following password : {passwd}")
 
     except ProgrammingError as e:
         print(e)

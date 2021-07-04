@@ -5,6 +5,11 @@ config/
 !config/chatsubo.sample.yml
 !config/providers/docker/.keep
 
+docker/uploads
+
+!docker/uploads/logo
+!docker/uploads/*/.keep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

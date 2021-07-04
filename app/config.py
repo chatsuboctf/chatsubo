@@ -9,12 +9,13 @@ import os
 
 class Config(object):
     # If not set fall back to production for safety
-    FLASK_ENV = os.getenv('FLASK_ENV', 'production')
+    ENV = os.getenv('ENV', 'production')
+    FLASK_ENV = ENV
     # Set FLASK_SECRET on your production Environment
     SECRET_KEY = os.getenv('FLASK_SECRET', 'changeme')
     APP_DIR = os.path.dirname(__file__)
     ROOT_DIR = os.path.dirname(APP_DIR)
-    DIST_DIR = os.path.join(ROOT_DIR, f"front/{'dist' if FLASK_ENV == 'production' else 'public'}")
+    DIST_DIR = os.path.join(ROOT_DIR, f"front/{'dist' if ENV == 'production' else 'public'}")
     UPLOAD_FOLDER = os.path.join(DIST_DIR, "static/uploads")
     AVATARS_FOLDER = os.path.join(UPLOAD_FOLDER, "avatars")
     LOGO_IMG_PATH = os.path.join(UPLOAD_FOLDER, "logo", "logo.png")
