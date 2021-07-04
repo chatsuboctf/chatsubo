@@ -1,9 +1,9 @@
 .data
 .idea
 
-config/
 !config/chatsubo.sample.yml
 !config/providers/docker/.keep
+config/
 
 docker/uploads
 

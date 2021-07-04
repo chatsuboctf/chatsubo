@@ -18,7 +18,7 @@ class DockerProvider(BaseProvider):
     kind = "docker"
     is_dynamic = True
 
-    def __init__(self, name, host, port, client_cert, client_key, ca, dockerfile_root, mem_limit, docker_network, flag_prefix, realms, vpns):
+    def __init__(self, name, host, port, client_cert, client_key, ca, dockerfiles_root, mem_limit, docker_network, flag_prefix, realms, vpns):
 
         self.name = name
         self.host = host
@@ -26,7 +26,7 @@ class DockerProvider(BaseProvider):
         self.client_cert = client_cert
         self.client_key = client_key
         self.ca = ca
-        self.dockerfile_root = dockerfile_root
+        self.dockerfiles_root = dockerfiles_root
         self.mem_limit = mem_limit
         self.docker_network = docker_network
         self.flag_prefix = flag_prefix
@@ -68,12 +68,12 @@ class DockerProvider(BaseProvider):
         dirnames = []
 
         try:
-            _, dirnames, _ = next(walk(self.dockerfile_root))
+            _, dirnames, _ = next(walk(self.dockerfiles_root))
         except StopIteration:
             pass
 
         for template in dirnames:
-            dfp = DockerfileParser(path=path.join(self.dockerfile_root, template))
+            dfp = DockerfileParser(path=path.join(self.dockerfiles_root, template))
             templates.append(
                 DockerTemplate(
                     template,
@@ -124,7 +124,7 @@ class DockerProvider(BaseProvider):
     def start_dynamic_instance(self, realm, template, session_id):
         # session_id = str(uuid4())
         tag = hashlib.sha1(session_id.encode('utf-8')).hexdigest()
-        dockerfile_dir = path.join(self.dockerfile_root, template)
+        dockerfile_dir = path.join(self.dockerfiles_root, template)
         build_params = {
             "path": dockerfile_dir,
             "dockerfile": path.join(dockerfile_dir, "Dockerfile"),
@@ -200,7 +200,7 @@ class DockerProvider(BaseProvider):
             "client_cert": raw_conf["api"]["client"]["cert"],
             "client_key": raw_conf["api"]["client"]["key"],
             "ca": raw_conf["api"]["client"]["ca"],
-            "dockerfile_root": raw_conf["dynamic"]["local_dockerfile_root"],
+            "dockerfiles_root": raw_conf["dockerfiles_root"],
             "docker_network": raw_conf.get("docker_network", defaults["docker_network"]),
             "flag_prefix": raw_conf.get("flag_prefix", defaults["flag_prefix"]),
             "mem_limit": raw_conf["limits"]["memory"],

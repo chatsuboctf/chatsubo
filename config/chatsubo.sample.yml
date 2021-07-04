@@ -1,0 +1,52 @@
+providers:
+  # PVE providers list
+  pve:
+#    remote_pve:  # This can be anything but must be kept unique
+#     api:
+#       user: "api@pve"
+#       host: "X.X.X.X"
+#       port: 8006
+#       token:
+#         name: "changeme"
+#         value: "changeme"
+#     realms:
+#       - "chatsubo.wz"
+
+  # Docker providers list
+  docker:
+#    local_docker:  # This can be anything but must be kept unique
+#      dockerfiles_root: "/var/chatsubo/docker"
+#      limits:
+#        memory: "256m"
+#      flag_prefix: "FLAG"
+#      api:
+#        host: "127.0.0.1"
+#        port: 2376
+#        client:
+#          cert: "config/providers/docker/local/cert.pem"
+#          key: "config/providers/docker/local/key.pem"
+#          ca: "config/providers/docker/local/ca.pem"
+#      realms:
+#        - "local_wz"
+#    remote_docker:  # This can be anything but must be kept unique
+#      dockerfiles_root: "/var/chatsubo/docker"
+#      limits:
+#        memory: "256m"
+#      flag_prefix: "FLAG"
+#      api:
+#        host: "chatsubo.wz"
+#        port: 2376
+#        client:
+#          cert: "config/providers/docker/chatsubo.wz/cert.pem"
+#          key: "config/providers/docker/chatsubo.wz/key.pem"
+#          ca: "config/providers/docker/chatsubo.wz/ca.pem"
+#      realms:
+#        - "chatsubo.wz"
+
+vpns:
+#  - realm: "local_wz"
+#    url: "http://127.0.0.1:7474"
+#    token: "CHANGEME"
+#  - realm: "chatsubo.wz"
+#    url: "http://chatsubo.wz:7474"
+#    token: "CHANGEME"
