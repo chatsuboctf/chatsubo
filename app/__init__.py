@@ -32,41 +32,41 @@ if not os.environ.get("CHATSUBO_WORKERS", False):
     ctx.seed_db()
     ctx.collect_expired()
 
-    from app.api import teams_bp
-    from app.api import auth_bp
-    from app.api import flags_bp
-    from app.api import boxes_bp
-    from app.api import users_bp
-    from app.api import providers_bp
-    from app.api import categories_bp
-    from app.api import realms_bp
-    from app.api import vpn_bp
-    from app.api import settings_bp
-    from app.api import queue_bp
+from app.api import teams_bp
+from app.api import auth_bp
+from app.api import flags_bp
+from app.api import boxes_bp
+from app.api import users_bp
+from app.api import providers_bp
+from app.api import categories_bp
+from app.api import realms_bp
+from app.api import vpn_bp
+from app.api import settings_bp
+from app.api import queue_bp
 
-    server.register_blueprint(teams_bp)
-    server.register_blueprint(flags_bp)
-    server.register_blueprint(auth_bp)
-    server.register_blueprint(boxes_bp)
-    server.register_blueprint(users_bp)
-    server.register_blueprint(providers_bp)
-    server.register_blueprint(categories_bp)
-    server.register_blueprint(realms_bp)
-    server.register_blueprint(vpn_bp)
-    server.register_blueprint(settings_bp)
-    server.register_blueprint(queue_bp)
+server.register_blueprint(teams_bp)
+server.register_blueprint(flags_bp)
+server.register_blueprint(auth_bp)
+server.register_blueprint(boxes_bp)
+server.register_blueprint(users_bp)
+server.register_blueprint(providers_bp)
+server.register_blueprint(categories_bp)
+server.register_blueprint(realms_bp)
+server.register_blueprint(vpn_bp)
+server.register_blueprint(settings_bp)
+server.register_blueprint(queue_bp)
 
-    server.logger.info('>>> {}'.format(Config.FLASK_ENV))
+server.logger.info('>>> {}'.format(Config.FLASK_ENV))
 
-    server.logger.info(server.url_map)
+server.logger.info(server.url_map)
 
-    @server.route('/', defaults={'path': ''})
-    @server.route('/<path:path>')
-    def catch_all(path):
-        dist_dir = current_app.config['DIST_DIR']
-        entry = os.path.join(dist_dir, 'index.html')
-        return send_file(entry)
+@server.route('/', defaults={'path': ''})
+@server.route('/<path:path>')
+def catch_all(path):
+    dist_dir = current_app.config['DIST_DIR']
+    entry = os.path.join(dist_dir, 'index.html')
+    return send_file(entry)
 
 
-    socketio_server = SocketIO(server, cors_allowed_origins="*")
-    ctx.register_socketio(socketio_server)
+socketio_server = SocketIO(server, cors_allowed_origins="*")
+ctx.register_socketio(socketio_server)

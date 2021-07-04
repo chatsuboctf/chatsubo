@@ -178,7 +178,7 @@
           <v-autocomplete
               outlined
               v-model="newBox.os"
-              :items="availableOS"
+              :items="availableOs"
               :rules="[() => !!newBox.os || 'This field is required']"
               auto-select-first
               label="OS"
@@ -563,7 +563,7 @@ export default {
   props: {
     availableTemplates: Array,
     availableCategories: Array,
-    availableOS: Array,
+    availableOs: Array,
     show: Boolean,
   },
   beforeMount() {
@@ -618,7 +618,6 @@ export default {
     makeFlags(selectedTemplate){
       // const template = this.availableTemplates.find(tpl => tpl.data.name === selectedTemplate.name)
       for (const [idx, flag] of selectedTemplate.flags.entries()){
-        console.log(flag)
         this.addFlag()
         this.newBox.flags[idx].name = flag.name
         this.newBox.flags[idx].value = flag.value
@@ -627,7 +626,6 @@ export default {
       }
     },
     parseLabels(selectedTemplate){
-      // const template = this.availableTemplates.find(tpl => tpl.data.name === selectedTemplate.name)
       for (const label in selectedTemplate.labels){
         if (Object.prototype.hasOwnProperty.call(selectedTemplate.labels, label)){
           let key = label.replace("chatsubo.", "")
@@ -642,12 +640,12 @@ export default {
             case "template":
               continue
             case "category":
-              if (this.availableCategories.includes(key)){
+              if (this.availableCategories.includes(selectedTemplate.labels[label])){
                 this.newBox[key] = selectedTemplate.labels[label]
               }
               break
             case "os":
-              if (this.availableOS.includes(key)){
+              if (this.availableOs.includes(selectedTemplate.labels[label])){
                 this.newBox[key] = selectedTemplate.labels[label]
               }
               break

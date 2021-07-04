@@ -260,7 +260,7 @@
         :show.sync="showNewBoxDialog"
         :available-templates="availableTemplates"
         :available-categories="availableCategories.map(cat => cat.name)"
-        :available-os="availableOS"
+        :available-os="availableOs"
         @create="createNewBox"
         @click:outside="showNewBoxDialog = false"
     />
@@ -315,7 +315,7 @@ export default {
     return {
       availableTemplates: [],
       availableCategories: [],
-      availableOS: ['Linux', 'Windows', 'FreeBSD', 'Other'],
+      availableOs: ['Linux', 'Windows', 'FreeBSD', 'Other'],
       selected: [],
       boxes: undefined,
       search: "",
