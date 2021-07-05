@@ -251,7 +251,7 @@ router.beforeEach((to, from, next) => {
             msg = "The game has not started yet"
             break
           case "has_ended":
-            msg = "The game is finished"
+            msg = "The game has ended"
             break
         }
         Vue.$toast.info(msg)

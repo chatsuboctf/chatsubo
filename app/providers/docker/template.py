@@ -11,7 +11,6 @@ class DockerTemplate(BaseTemplate):
         data = self._to_json()
 
         data.update({
-            "labels": self.labels,
             "dockerfile": self.dockerfile,
         })
 

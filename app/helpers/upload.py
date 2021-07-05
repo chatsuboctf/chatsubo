@@ -3,7 +3,8 @@ ALLOWED_IMG_EXTENSIONS = [
     "jpg",
     "jpeg",
     "svg",
-    "webp"
+    "webp",
+    "gif"
 ]
 
 

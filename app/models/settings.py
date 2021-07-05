@@ -9,16 +9,12 @@ import app.context
 default_homepage = """<button id="home-edit-me" class="pure-material-button-contained" onclick="window.location='/admin/settings/home'" ><svg id="home-edit-me-icon" class="mr-3" viewBox="0 0 24 24">
     <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
 </svg>Edit</button>
-<center><img class="mt-6" id="home-logo" src="static/uploads/logo/logo.png" /></center>
+<center><img class="mt-6" id="home-logo" src="/static/uploads/logo/logo.png" /></center>
 <pre style="white-space: pre-wrap">
-<!-- <center><b id="home-welcome">Welcome on Chatsubo</b></center> -->
-<center>
-<a href="https://chatsubo.hbouffier.info">-= Getting started =-</a></center>
-<center><a href="https://chatsubo.hbouffier.info/docs/Personnalisation/index">-= Customization =-</a></center>
-<center><a href="https://chatsubo.hbouffier.info/docs/Personnalisation/index">-= Providers =-</a></center>
-<center><a href="https://chatsubo.hbouffier.info/docs/Personnalisation/index">-= Tracks =-</a></center>
-<center><a href="https://chatsubo.hbouffier.info/docs/Personnalisation/index">-= Boxes =-</a></center>
-
+<center><a href="https://docs.chatsubo.me/docs/Introduction/quickstart">-= Quickstart =-</a></center>
+<center><a href="https://docs.chatsubo.me/docs/Providers/index">-= Providers =-</a></center>
+<center><a href="https://docs.chatsubo.me/docs/Accès VPN/index/index">-= VPN Access =-</a></center>
+<center><a href="https://docs.chatsubo.me/Personnalisation/index">-= Customization =-</a></center>
 
 </pre>
 <style>

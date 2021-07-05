@@ -1,4 +1,4 @@
-CERT_HOST=${CERT_HOST:-chatsubo.wz}
+CERT_HOST=${CERT_HOST:=chatsubo.wz}
 
 ### Server
 ## Create CA key

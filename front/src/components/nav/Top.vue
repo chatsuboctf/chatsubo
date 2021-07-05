@@ -63,7 +63,7 @@
             class="mr-1"
             v-text="'mdi-calendar'"
         />
-        The game has not started yet
+        {{ $store.getters.getSettings.state === 'has_ended' ? 'The game has ended' : 'The game has not started yet' }}
       </v-chip>
     </v-chip-group>
     <v-menu

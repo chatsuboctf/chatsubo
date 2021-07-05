@@ -72,7 +72,6 @@ def init(app):
         providers.load(pv_configs, vpns)
     except (MissingProviderConfigException, BackendConnectionException, VpnProviderErrorException) as e:
         print(f"Failed to load provider '{e.pv_name}' : {str(e.error)}")
-        exit(1)
 
     celery_app = make_celery(app)
     scheduler = sched.scheduler()
