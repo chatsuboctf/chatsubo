@@ -14,7 +14,7 @@ openssl genrsa -out server-key.pem 4096
 openssl req -subj "/CN=$CERT_HOST" -sha256 -new -key server-key.pem -out server.csr
 
 ## Create server key's extfile
-echo "subjectAltName = DNS:$CERT_HOST,IP:$(host $CERT_HOST),IP:127.0.0.1" >> server-extfile.cnf
+echo "subjectAltName = DNS:$CERT_HOST,IP:127.0.0.1" >> server-extfile.cnf
 echo "extendedKeyUsage = serverAuth" >> server-extfile.cnf
 
 ## Sign csr with CA
@@ -42,5 +42,5 @@ mv client-key.pem key.pem
 mv client-cert.pem cert.pem
 
 ## Adjust permissions to protect the CA's keys
-chmod -v 0400 ca-key.pem client-key.pem server-key.pem
-chmod -v 0444 ca.pem server-cert.pem client-cert.pem
+chmod -v 0400 ca-key.pem key.pem server-key.pem
+chmod -v 0444 ca.pem server-cert.pem cert.pem
