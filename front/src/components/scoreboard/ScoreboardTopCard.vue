@@ -102,7 +102,6 @@ export default {
   },
   computed:{
     meta(){
-      console.log(this.user)
       return this.mapRankToMeta()
     }
   },

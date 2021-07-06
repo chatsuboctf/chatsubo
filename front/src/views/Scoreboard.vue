@@ -58,7 +58,6 @@ export default {
           cat.totalFlags = 0
           for (let box of cat.boxes) {
             cat.totalFlags += box.flags.length
-            console.log(cat.totalFlags)
           }
           allTotalFlags += cat.totalFlags
         }
