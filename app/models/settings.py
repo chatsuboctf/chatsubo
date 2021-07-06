@@ -13,8 +13,8 @@ default_homepage = """<button id="home-edit-me" class="pure-material-button-cont
 <pre style="white-space: pre-wrap">
 <center><a href="https://docs.chatsubo.me/docs/Introduction/quickstart">-= Quickstart =-</a></center>
 <center><a href="https://docs.chatsubo.me/docs/Providers/index">-= Providers =-</a></center>
-<center><a href="https://docs.chatsubo.me/docs/Accès VPN/index/index">-= VPN Access =-</a></center>
-<center><a href="https://docs.chatsubo.me/Personnalisation/index">-= Customization =-</a></center>
+<center><a href="https://docs.chatsubo.me/docs/Accès VPN/index">-= VPN Access =-</a></center>
+<center><a href="https://docs.chatsubo.me/docs/customisation">-= Customization =-</a></center>
 
 </pre>
 <style>
