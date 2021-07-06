@@ -31,22 +31,18 @@ export default {
     }
   },
   updated() {
-    console.log("nav-fade-show")
     setTimeout(function () {
       // next()
       $(".nav-fade").addClass("nav-fade-show")
     }, 400)
   },
   beforeMount() {
-    console.log("nav-fade-show")
     setTimeout(function () {
       // next()
       $(".nav-fade").addClass("nav-fade-show")
     }, 400)
   },
   beforeRouteUpdate: function (to, from, next) {
-    console.log(" remove nav-fade-show")
-
     setTimeout(function () {
       next()
     }, 100)
