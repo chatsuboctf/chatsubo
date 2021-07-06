@@ -48,6 +48,7 @@ class DockerProvider(BaseProvider):
 
     def list_templates(self):
         templates = []
+        # TODO: List non dynamic template as well
         # images = self.client.images.list()
         # configs = [img.attrs for img in images if img.labels.get("chatsubo.template")]
         # for config in configs:
